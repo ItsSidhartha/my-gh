@@ -5,8 +5,10 @@ export interface createRepoOptions {
   description?: string;
 }
 
-
 export interface CloneRepoOptions {
   noUpstream?: boolean;
   upstreamRemoteName?: string;
+}
+export interface DeleteRepoOptions {
+  yes: boolean;
 }

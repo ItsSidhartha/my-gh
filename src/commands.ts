@@ -1,7 +1,8 @@
 import { Command } from "commander/esm.mjs";
 import { createRepo } from "./handlers/createRepo.ts";
 import { cloneRepo } from "./handlers/cloneRepo.ts";
-import { CloneRepoOptions, createRepoOptions } from "./models.ts";
+import { CloneRepoOptions, createRepoOptions, DeleteRepoOptions } from "./models.ts";
+import { deleteRepo } from "./handlers/deleteRepo.ts";
 
 const repoCommand = () => {
   const command = new Command("repo")
@@ -25,6 +26,14 @@ const repoCommand = () => {
     .option("-u --upstream-remote-name <name>", "Upstream remote name when cloning a fork (default \"upstream\")")
     .action(async (repository: string, directory: string, options: CloneRepoOptions) => {
       await cloneRepo(repository, directory, options);
+    });
+
+  command
+    .command("delete <repository>")
+    .description("Delete a GitHub repository")
+    .option("--yes", "Confirm deletion without prompting")
+    .action(async (repository: string, options: DeleteRepoOptions) => {
+      await deleteRepo(repository, options);
     });
 
   return command;
